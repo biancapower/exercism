@@ -45,6 +45,18 @@ class Meetup
     when :fourth
       [22,23,24,25,26,27,28].include?(date.day)
     when :last
+      case date.month
+      when 2
+        if date.gregorian.leap?
+          [29,28,27,26,25,24,23].include?(date.day)
+        else
+          [28,27,26,25,24,23,22].include?(date.day)
+        end
+      when 9,4,6,11
+        [30,29,28,27,26,25,24].include?(date.day)
+      else
+        [31,30,29,28,27,26,25].include?(date.day)
+      end
     end
   end
 
@@ -54,5 +66,3 @@ class Meetup
     return date
   end
 end
-
-p Meetup.new(7, 2014).day(:monday, :teenth)
