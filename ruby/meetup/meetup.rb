@@ -35,29 +35,30 @@ class Meetup
   def correct_position?(date, pos)
     case pos
     when :teenth
-      [13,14,15,16,17,18,19].include?(date.day)
+      rng = [*13..19]
     when :first
-      [1,2,3,4,5,6,7].include?(date.day)
+      rng = [*1..7]
     when :second
-      [8,9,10,11,12,13,14].include?(date.day)
+      rng = [*8..14]
     when :third
-      [15,16,17,18,19,20,21].include?(date.day)
+      rng = [*15..21]
     when :fourth
-      [22,23,24,25,26,27,28].include?(date.day)
+      rng = [*22..28]
     when :last
       case date.month
       when 2
         if date.gregorian.leap?
-          [29,28,27,26,25,24,23].include?(date.day)
+          rng = [*23..29]
         else
-          [28,27,26,25,24,23,22].include?(date.day)
+          rng = [*22..28]
         end
       when 9,4,6,11
-        [30,29,28,27,26,25,24].include?(date.day)
+        rng = [*24..30]
       else
-        [31,30,29,28,27,26,25].include?(date.day)
+        rng = [*25..31]
       end
     end
+    rng.include?(date.day)
   end
 
   def day(weekday, position)
